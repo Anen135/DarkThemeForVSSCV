@@ -1,0 +1,640 @@
+#connectionCanvas {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0px;
+  pointer-events: none;
+}
+
+.VpwCodeEditor {
+  font-family: monospace;
+  line-height: 130%;
+
+  background-color: rgba(255, 255, 255, 0.1);
+
+  margin-left: 5px;
+  margin-bottom: 5px;
+  width: calc(100% - 10px);
+
+  white-space: pre;
+
+  padding-right: 3px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+
+  border: 0px solid black;
+
+  overflow: auto;
+  /* <=> scroll + hidden*/
+
+  counter-reset: vpwcodeeditorline;
+}
+
+.VpwCodeEditor div:before {
+  content: counter(vpwcodeeditorline);
+  font-size: 80%;
+  color: rgba(255, 255, 255, 0.404);
+  vertical-align: middle;
+}
+
+.VpwCodeEditor div {
+  counter-increment: vpwcodeeditorline;
+}
+
+.btnOpenDefinition {
+  /*float: right;*/
+  vertical-align: middle;
+  border-radius: 2px;
+  font-family: "Arial";
+  border: none;
+  background: none;
+  color: white;
+  width: 13px;
+  height: 13px;
+  cursor: pointer;
+  padding: 0px;
+  padding-bottom: 1px;
+
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.btnOpenDefinition:active {
+  border-top-color: #000;
+  border-left-color: #000;
+  border-bottom-color: #CCC;
+  border-right-color: #CCC;
+}
+
+.btnOpenDefinition:focus {
+  border: 1px rgb(0, 133, 185) dotted;
+  border-radius: 2px;
+  outline: none;
+}
+
+.VpwBtnOpenDefinition_ON,
+.VpwBtnOpenDefinition_ON:focus,
+.VpwBtnOpenDefinition_ON:hover {
+  background-color: #AAA;
+  border: 0px;
+  border-radius: 10px;
+}
+
+.Window_Clientarea_BlocksArea {
+  background-color: rgba(187, 187, 187, 0.082);
+  padding: 2px;
+}
+
+.Window_Clientarea_OpenDeclarationBlock {
+  /*border-style: solid;
+  border-width: 1px;
+  border-color: grey white white grey;*/
+  font-family: monospace;
+
+  white-space: nowrap;
+
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 3px;
+
+  background: linear-gradient(180deg, #404040 0%, #000000 100%); /* Swapped colors */
+  border-radius: 3px;
+
+  user-select: none;
+
+}
+
+.Window_Clientarea_OpenDeclarationBlock:hover {
+  background: linear-gradient(180deg, #424242 0%, #000000 100%); /* Swapped colors */
+}
+
+.Window_Clientarea_OpenDeclarationBlock:active {
+  background: #ff4747;
+}
+
+.viewEntityRepr_OutlineKindIndicator {
+  color: #007bff;
+  /* Light blue for dark mode */
+  font-size: 80%;
+  position: relative;
+  top: -1px;
+  left: -1.5px;
+  display: inline-block;
+  border-right: 1px solid #fff;
+  /* White border for better contrast */
+  padding-right: 2px;
+  margin-right: 1px;
+  /*border-radius: 10px;
+  min-width: 5px;
+  margin-right: 2px;
+
+  padding-left:4px;
+  box-shadow: 0px 0px 1px black;*/
+}
+
+.VpwButtonMovableBtn,
+.VpwButtonMovable {
+  padding-left: 1px;
+  padding-right: 1px;
+  margin: 0px;
+  /*border: 1px solid grey;*/
+  border-width: 1px;
+  border-radius: 2px;
+  width: 13px;
+  height: 13px;
+  border-color: #fff;
+  /* White border for better contrast */
+
+  /* remove focus shadow*/
+  box-shadow: none;
+}
+
+.VpwButtonMovableBtn span {
+  position: relative;
+  top: -4px;
+}
+
+.VpwButtonMovableBtn:hover {
+  background-color: #333;
+  /* Dark gray for hover */
+}
+
+
+.VpwButtonMovableBtn button::-moz-focus-inner {
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+}
+
+.VpwMessageWindow .Window_Titlearea {
+  padding-right: 12px;
+  white-space: nowrap;
+  font-weight: bold;
+
+  min-width: 200px;
+}
+
+.VpwMessageWindow.Error {
+  background-color: #f1dede;
+  /* Light red for error */
+  color: #6b0000;
+  /* Dark red for error text */
+}
+
+.VpwMessageWindow.Error .Window_Titlearea::before {
+  content: "🧐 ";
+}
+
+.VpwMessageWindow.Warning {
+  background-color: #fcf8e8;
+  /* Light yellow for warning */
+  color: #202162;
+  /* Dark blue for warning text */
+}
+
+.VpwMessageWindow.Warning .Window_Titlearea::before {
+  content: "🤔 ";
+}
+
+.VpwMessageWindow.Info {
+  background-color: #e2f2ff;
+  /* Light blue for info */
+  color: #202162;
+  /* Dark blue for info text */
+}
+
+.VpwMessageWindow.Info .Window_Titlearea::before {
+  content: "🤫 ";
+}
+
+
+.VpwMessageWindow .Window_Clientarea {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.VpwViewEntityWindow {
+  animation-name: VpwViewEntityWindowOpen;
+  animation-duration: 0.3s;
+}
+
+@keyframes VpwViewEntityWindowOpen {
+
+  from {
+    opacity: 0;
+    transform: scaleY(0.9) scaleX(1.1) translate(-20%, 0px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1) scaleX(1) translate(0px, 0px);
+  }
+}
+
+body {
+  font-size: 80%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+textarea {
+  font-size: 85%;
+}
+
+.button_flat {
+  padding: 0px;
+  min-width: 20px;
+  vertical-align: top;
+  text-align: center;
+  user-select: none;
+  background-color: unset;
+  display: inline-block;
+
+  margin: 0px;
+
+
+  border: 0px;
+}
+
+.button_flat:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Light gray for hover */
+}
+
+.button_flat:active {
+  background-color: rgba(214, 214, 214, 0.2);
+  /* Darker gray for active */
+}
+
+.VgfPopupWindow {
+  animation-name: VgfPopupWindowOpen;
+  animation-duration: 0.05s;
+  animation-timing-function: linear;
+}
+
+
+@keyframes VgfPopupWindowOpen {
+  from {
+    opacity: 0;
+    transform: scaleY(0.7) scaleX(0.9) translate(-00px, -20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1) scaleX(1) translate(0px, 0px);
+  }
+}
+
+.VgfWorld {
+  /* Debugging: see where world is */
+  border: 1px solid red;
+}
+
+.VgfNavigationArea {
+  overflow: hidden;
+  background-color: #333;
+  /* Dark gray for navigation area */
+}
+
+.VgfNavigationArea,
+.VgfInteractionArea {
+  width: 100%;
+  height: 100%;
+
+  /* needed to allow height=100% */
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.VgfWidget_dragging {
+  box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.205);
+}
+
+/**
+ CSS-File for general CSS
+**/
+
+.resizable {
+  resize: both;
+  overflow: auto;
+}
+
+.VgfMenu {
+  border: 1px solid #fff;
+  /* White border for better contrast */
+  background: #222;
+  /* Dark gray for menu background */
+
+  /*display: inline-block;
+  position: absolute;*/
+
+  padding: 0px;
+  margin: 0px;
+}
+
+.VgfMenuSeparator {
+  border-top: 1px solid rgba(255, 255, 255, 0.213);
+  /* Light gray border for separator */
+  margin-top: 3px;
+
+  width: 100%;
+  max-height: 0px;
+}
+
+.VgfMenuEntry {
+  /* Have invisible border to prevent entry-wiggle on hover*/
+  border-top: 1px solid #0000;
+  border-bottom: 1px solid #0000;
+
+  margin-top: 2px;
+  margin-bottom: 2px;
+  padding: 5px;
+  padding-left: 17px;
+  padding-right: 17px;
+  white-space: nowrap;
+  user-select: none;
+  color: #fff;
+  /* White text for menu entries */
+}
+
+.VgfMenuEntry:hover {
+  border-top: 1px solid #2b71bc;
+  border-bottom: 1px solid #2b71bc;
+  background: linear-gradient(#5ca9f9, #3b8fe8);
+  color: whitesmoke;
+}
+
+.td_expanderButton {
+  width: 1px;
+  vertical-align: top;
+}
+
+.td_expanderButton .button_flat {
+  padding-bottom: 7px;
+}
+
+/* ****************************************************
+*******************************************************
+************* Window Mgr Windows **********************
+*******************************************************
+******************************************************/
+.Window_OuterFrame {
+
+  /*width: 250px; /**/
+  /*width: auto;*/
+
+  border: 1px solid rgb(150, 150, 150); /* Light gray border */
+  background-color: rgb(30, 30, 30); /* Dark gray background */
+  border-radius: 3px;
+}
+
+
+.Window_InnerFrame {
+  padding-bottom: 1px;
+  border-radius: 3px;
+}
+
+.Window_InnerFrame hr {
+  color: rgb(100, 100, 100); /* Light gray for hr */
+  margin-top: 0px;
+}
+
+.Window_Titlebar {
+  user-select: none;
+  display: table;
+  width: 100%;
+}
+
+.Window_Titlearea {
+  padding-bottom: 7px;
+  padding-top: 7px;
+  width: 100%;
+  user-select: none;
+}
+
+/*.expandable_title_extended .Window_Titlearea {
+
+}*/
+
+.expandable_title_collapsed .Window_Titlearea {
+  white-space: nowrap;
+  max-width: 24em;
+  overflow: hidden;
+
+  /* fading text */
+  /* Also blurrs text to an illegible degree, so deactivated
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  */
+}
+
+
+.VgfWindowTiled_WindowButtonsDiv {
+  vertical-align: top;
+  float: right;
+}
+
+
+.Window_Titlebar_MetatypeDiv {
+  font-size: 65%;
+  position: absolute;
+  top: 4px;
+  left: 22px;
+  color: #007bff; /* Light blue for metatype */
+
+}
+
+.Window_Titlebar_Title {
+  padding: 5px;
+  padding-left: 3px;
+  padding-bottom: 0px;
+  position: relative;
+  top: 6px;
+  left: -3px;
+
+  font-family: monospace;
+  color: #fff; /* White for title */
+}
+
+
+.Window_btn {
+  padding: 2px;
+  vertical-align: middle;
+  text-align: center;
+
+  user-select: none;
+  color: #ff2f2f; /* White for button text */
+}
+
+.Window_btn:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Light gray for hover */
+}
+
+.Window_btn:active {
+  background-color: rgba(214, 214, 214, 0.2); /* Darker gray for active */
+}
+
+.Window_btnClose {
+  min-width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 0px;
+  top: 1px;
+}
+
+.Window_btnClose:hover {
+  background-color: #dc3545; /* Red for hover */
+  color: white;
+  border-radius: 3px;
+}
+
+
+.Window_btnClose:active {
+  background-color: #c82333; /* Darker red for active */
+  color: white;
+
+}
+
+.Window_Clientarea {
+  /* Border like for class diagrams */
+  /* border-top: 1px solid rgba(200, 200, 200); */
+  padding: 2px;
+  background-color: #222; /* Dark gray for client area */
+}
+
+.VgfWindow_focussed {
+  /*box-shadow: inset 0px 0px 7px #00FF5555;*/
+  box-shadow: 0px 0px 7px #00000055;
+}
+
+
+.VgfWindow {
+  display: inline-block;
+  position: absolute;
+}
+
+.VgfLine {
+  pointer-events: none;
+  position: relative;
+  width: 0px;
+  height: 0px;}
+
+/*!
+  Theme: Default
+  Description: Original highlight.js style
+  Author: (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+  Maintainer: @highlightjs/core-team
+  Website: https://highlightjs.org/
+  License: see project LICENSE
+  Touched: 2021
+*/
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+  background: #282c34; /* Dark background */
+  color: #d4d4d4; /* Light gray for code */
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+/* .hljs {
+  background: #f0f0f0;
+  color: #444
+} */
+
+.hljs-comment {
+  color: #6a737d; /* Gray for comments */
+}
+
+.hljs-punctuation,
+.hljs-tag {
+  color: #d4d4d4; /* Light gray for punctuation and tags */
+}
+
+.hljs-tag .hljs-attr,
+.hljs-tag .hljs-name {
+  color: #d4d4d4; /* Light gray for tag attributes and names */
+}
+
+.hljs-attribute,
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-name,
+.hljs-selector-tag {
+  color: #c792ea; /* Purple for keywords and identifiers */
+}
+
+.hljs-deletion,
+.hljs-quote,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-string,
+.hljs-template-tag,
+.hljs-type {
+  color: #ff5c5c; /* Red for strings and types */
+}
+
+.hljs-number {
+  color: #c3e88d; /* Green for numbers */
+}
+
+.hljs-section,
+.hljs-title {
+  color: #ff5c5c; /* Red for section and titles */
+  font-weight: 700;
+}
+
+.hljs-link,
+.hljs-operator,
+.hljs-regexp,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-symbol,
+.hljs-template-variable,
+.hljs-variable {
+  color: #ff9800; /* Orange for operators and variables */
+}
+
+.hljs-literal {
+  color: #79c0ff; /* Blue for literals */
+}
+
+.hljs-addition,
+.hljs-bullet,
+.hljs-code {
+  color: #98c379; /* Green for additions */
+}
+
+.hljs-built_in {
+  color: #639a67; /* Green for built-ins */
+}
+
+.hljs-meta {
+  color: #79c0ff; /* Blue for meta information */
+}
+
+.hljs-meta .hljs-string {
+  color: #ff9800; /* Orange for strings in meta */
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
